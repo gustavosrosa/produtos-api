@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,12 @@ public class ProdutoController {
 	public ResponseEntity<DefaultResponseModel> salvar(@RequestBody Produto produto) {
 		produtoRepository.save(produto);
 		return new ResponseEntity<DefaultResponseModel>(new DefaultResponseModel(HttpStatus.CREATED.value(), "Criado com sucesso"), HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<DefaultResponseModel> excluir(@PathVariable Long id) {
+		produtoRepository.deleteById(id);
+		return new ResponseEntity<DefaultResponseModel>(new DefaultResponseModel(HttpStatus.OK.value(), "Excluido com sucesso"), HttpStatus.OK);
 	}
 
 }
