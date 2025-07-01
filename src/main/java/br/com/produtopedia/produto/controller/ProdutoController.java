@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,6 +40,13 @@ public class ProdutoController {
 	public ResponseEntity<DefaultResponseModel> salvar(@RequestBody Produto produto) {
 		produtoRepository.save(produto);
 		return new ResponseEntity<DefaultResponseModel>(new DefaultResponseModel(HttpStatus.CREATED.value(), "Criado com sucesso"), HttpStatus.CREATED);
+	}
+	
+	@PutMapping("{id}")
+	public ResponseEntity<DefaultResponseModel> alterar(@PathVariable Long id, @RequestBody Produto produto) {
+		produto.setId(id);
+		produtoRepository.save(produto);
+		return new ResponseEntity<DefaultResponseModel>(new DefaultResponseModel(HttpStatus.OK.value(), "Alterado com sucesso"), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{id}")
