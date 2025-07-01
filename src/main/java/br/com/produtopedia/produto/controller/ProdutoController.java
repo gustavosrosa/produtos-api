@@ -1,6 +1,6 @@
 package br.com.produtopedia.produto.controller;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.produtopedia.produto.model.DefaultResponseModel;
@@ -29,8 +28,13 @@ public class ProdutoController {
 		return produtoRepository.findById(id).orElse(null);
 	}
 	
+	@GetMapping
+	public List<Produto> obterTodosProdutos() {
+		return produtoRepository.findAll();
+	}
 	
-	@PostMapping()
+	
+	@PostMapping
 	public ResponseEntity<DefaultResponseModel> salvar(@RequestBody Produto produto) {
 		produtoRepository.save(produto);
 		return new ResponseEntity<DefaultResponseModel>(new DefaultResponseModel(HttpStatus.CREATED.value(), "Criado com sucesso"), HttpStatus.CREATED);
