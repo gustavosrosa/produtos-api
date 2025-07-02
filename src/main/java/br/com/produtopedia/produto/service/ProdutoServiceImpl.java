@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.produtopedia.produto.BusinessException;
 import br.com.produtopedia.produto.model.Produto;
 import br.com.produtopedia.produto.repository.ProdutoRepository;
 
@@ -31,13 +32,20 @@ public class ProdutoServiceImpl implements ProdutoService {
 
 	@Override
 	public void alterar(Long id, Produto produto) {
+		
+		this.throwErrorWhenUserIsNotFound(id);
 		produto.setId(id);
 		produtoRepository.save(produto);
 	}
 
 	@Override
 	public void excluir(Long id) {
+		this.throwErrorWhenUserIsNotFound(id);
 		produtoRepository.deleteById(id);
+	}
+	
+	private void throwErrorWhenUserIsNotFound(Long id) {
+		produtoRepository.findById(id).orElseThrow(() -> new BusinessException("Usuario nao encontrado!"));
 	}
 
 }
