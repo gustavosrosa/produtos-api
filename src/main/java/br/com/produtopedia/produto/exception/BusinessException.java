@@ -1,4 +1,4 @@
-package br.com.produtopedia.produto;
+package br.com.produtopedia.produto.exception;
 
 import lombok.Getter;
 

@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.produtopedia.produto.BusinessException;
+import br.com.produtopedia.produto.exception.BusinessException;
 import br.com.produtopedia.produto.model.Produto;
 import br.com.produtopedia.produto.service.ProdutoService;
 import br.com.produtopedia.produto.util.StringUtil;
