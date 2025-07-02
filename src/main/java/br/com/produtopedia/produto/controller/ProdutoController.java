@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.produtopedia.produto.facade.ProdutoFacade;
 import br.com.produtopedia.produto.model.DefaultResponseModel;
 import br.com.produtopedia.produto.model.Produto;
 import br.com.produtopedia.produto.repository.ProdutoRepository;
@@ -23,35 +24,35 @@ import br.com.produtopedia.produto.repository.ProdutoRepository;
 public class ProdutoController {
 	
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private ProdutoFacade produtoFacade;
+	
 	
 	@GetMapping("{id}")
 	public Produto obter(@PathVariable Long id) {
-		return produtoRepository.findById(id).orElse(null);
+		return produtoFacade.obter(id);
 	}
 	
 	@GetMapping
 	public List<Produto> obterTodosProdutos() {
-		return produtoRepository.findAll();
+		return produtoFacade.obterTodosProdutos();
 	}
 	
 	
 	@PostMapping
 	public ResponseEntity<DefaultResponseModel> salvar(@RequestBody Produto produto) {
-		produtoRepository.save(produto);
+		produtoFacade.salvar(produto);
 		return new ResponseEntity<DefaultResponseModel>(new DefaultResponseModel(HttpStatus.CREATED.value(), "Criado com sucesso"), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("{id}")
 	public ResponseEntity<DefaultResponseModel> alterar(@PathVariable Long id, @RequestBody Produto produto) {
-		produto.setId(id);
-		produtoRepository.save(produto);
+		produtoFacade.alterar(id, produto);
 		return new ResponseEntity<DefaultResponseModel>(new DefaultResponseModel(HttpStatus.OK.value(), "Alterado com sucesso"), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity<DefaultResponseModel> excluir(@PathVariable Long id) {
-		produtoRepository.deleteById(id);
+		produtoFacade.excluir(id);
 		return new ResponseEntity<DefaultResponseModel>(new DefaultResponseModel(HttpStatus.OK.value(), "Excluido com sucesso"), HttpStatus.OK);
 	}
 
