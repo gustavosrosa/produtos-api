@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import br.com.produtopedia.produto.BusinessException;
 import br.com.produtopedia.produto.model.Produto;
 import br.com.produtopedia.produto.service.ProdutoService;
+import br.com.produtopedia.produto.util.StringUtil;
 
 @Component
 public class ProdutoFacadeImpl implements ProdutoFacade {
@@ -44,11 +45,11 @@ public class ProdutoFacadeImpl implements ProdutoFacade {
 	}
 	
 	private void verificacoesCampos(Produto produto) {
-		if (produto.getNome().trim() == "") {
+		if (StringUtil.verificaSeVazioOuNulo(produto.getNome().trim())) {
 			throw new BusinessException("O nome do produto nao pode ser nulo!");
 		}
 		
-		if (produto.getPreco().equals(BigDecimal.ZERO) || produto.getNome().trim() == "") {
+		if (produto.getPreco().equals(BigDecimal.ZERO) || StringUtil.verificaSeVazioOuNulo(produto.getNome().trim())) {
 			throw new BusinessException("O preco nao pode ser zero!");
 		}
 	}
