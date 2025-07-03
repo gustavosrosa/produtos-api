@@ -45,11 +45,15 @@ public class ProdutoFacadeImpl implements ProdutoFacade {
 	}
 	
 	private void verificacoesCampos(Produto produto) {
-		if (StringUtil.verificaSeVazioOuNulo(produto.getNome().trim())) {
+		if (StringUtil.verificaSeVazioOuNulo(produto.getNome())) {
 			throw new BusinessException("O nome do produto nao pode ser nulo!");
 		}
 		
-		if (produto.getPreco().equals(BigDecimal.ZERO) || StringUtil.verificaSeVazioOuNulo(produto.getNome().trim())) {
+		if (StringUtil.verificaSePrecoVazioOuNulo(produto.getPreco())) {
+			throw new BusinessException("O preco nao pode ser nulo!");
+		} 
+		
+		if (produto.getPreco().equals(BigDecimal.ZERO)) {
 			throw new BusinessException("O preco nao pode ser zero!");
 		}
 	}
