@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.produtopedia.produto.BusinessException;
+import br.com.produtopedia.produto.exception.BusinessException;
 import br.com.produtopedia.produto.model.Produto;
 import br.com.produtopedia.produto.service.ProdutoService;
 import br.com.produtopedia.produto.util.StringUtil;
@@ -45,11 +45,15 @@ public class ProdutoFacadeImpl implements ProdutoFacade {
 	}
 	
 	private void verificacoesCampos(Produto produto) {
-		if (StringUtil.verificaSeVazioOuNulo(produto.getNome().trim())) {
+		if (StringUtil.verificaSeVazioOuNulo(produto.getNome())) {
 			throw new BusinessException("O nome do produto nao pode ser nulo!");
 		}
 		
-		if (produto.getPreco().equals(BigDecimal.ZERO) || StringUtil.verificaSeVazioOuNulo(produto.getNome().trim())) {
+		if (StringUtil.verificaSePrecoVazioOuNulo(produto.getPreco())) {
+			throw new BusinessException("O preco nao pode ser nulo!");
+		} 
+		
+		if (produto.getPreco().equals(BigDecimal.ZERO)) {
 			throw new BusinessException("O preco nao pode ser zero!");
 		}
 	}
