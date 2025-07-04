@@ -21,7 +21,7 @@ Endpoints:
 
 - POST: Cadastrar: /api/produto
 
-		Response Body (sendo descrição não obrigatório):
+		Request Body (sendo descrição não obrigatório):
 		{
 		    "nome": String,
 		    "descricao": String,
@@ -32,7 +32,7 @@ Endpoints:
 
 - PUT: Modificar: /api/produto/{id}
 
-		Response Body (sendo todos não obrigatórios):
+		Request Body (sendo todos não obrigatórios):
 		{
 		    "nome": String,
 		    "descricao": String,
